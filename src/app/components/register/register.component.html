@@ -1,0 +1,70 @@
+<form [formGroup]="formRegister">
+  <div class="card register-container">
+    <p-divider align="center">
+      <h2>Đăng ký</h2>
+    </p-divider>
+    <div class="p-fluid grid">
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText autofocus formControlName="username" />
+          <label>Username<span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['username'].errors && f['username'].dirty">
+          <ng-container *ngIf="f['username'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning"
+              value="Username không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <input type="password" pInputText formControlName="password" />
+          <label>Password<span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['password'].errors && f['password'].dirty">
+          <ng-container *ngIf="f['password'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning"
+              value="Mật khẩu không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText formControlName="fullName" />
+          <label>FullName<span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['fullName'].errors && f['fullName'].dirty">
+          <ng-container *ngIf="f['fullName'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning"
+              value="Họ và tên không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText formControlName="email" />
+          <label>Email<span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['email'].errors && f['email'].dirty">
+          <ng-container *ngIf="f['email'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning"
+              value="Email không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <p-divider class="p-field col-12 md-12"></p-divider>
+      <div class="p-field col-6 md-12">
+        <p-button label="Register" (onClick)="register()">
+        </p-button>
+      </div>
+      <div class="p-field col-6 md-12">
+        <p-button label="Login" styleClass="p-button-success" routerLink="../login">
+        </p-button>
+      </div>
+    </div>
+  </div>
+</form>

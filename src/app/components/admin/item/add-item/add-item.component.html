@@ -1,0 +1,84 @@
+<p-dialog [header]="formMode == 'add'? 'Thêm đối tượng': 'Sửa đối tượng'" [(visible)]="display" [modal]="true"
+  [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hide()">
+  <p-divider align="left"> <b>Thông tin cơ bản</b> </p-divider>
+  <form [formGroup]="formAdd">
+    <div class="p-fluid grid">
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText formControlName="code" />
+          <label>Code <span style="color: red;">*</span>
+          </label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText formControlName="name" />
+          <label>Name <span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['name'].errors && f['name'].dirty">
+          <ng-container *ngIf="f['name'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning" value="Tên đối tượng không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <p-inputNumber inputId="integeronly" [showButtons]="true" [min]="0" formControlName="numOfDay">
+          </p-inputNumber>
+          <label>Chu kỳ kiểm tra
+          </label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <p-inputNumber inputId="integeronly" [showButtons]="true" [min]="0" [max]="100"
+            formControlName="qualityScore">
+          </p-inputNumber>
+          <label>Chỉ số chất lượng
+          </label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <p-inputNumber inputId="integeronly" [showButtons]="true" [min]="0" [max]="100" formControlName="minScore">
+          </p-inputNumber>
+          <label>Chất lượng tối thiểu
+          </label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <p-treeSelect [options]="treeCategory" (onNodeSelect)="selectCategory($event)" selectionMode="single" formControlName="categoryId"
+            placeholder="Chọn danh mục"></p-treeSelect>
+          <label>Danh mục <span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="!thisCategory">
+          <ng-container>
+            <p-tag styleClass="p-mr-2" severity="warning" value="Danh mục không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <p-divider align="left"> <b>Trạng thái</b> </p-divider>
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <p-selectButton [options]="itemStatusList" optionLabel="name" optionValue="value" formControlName="status"></p-selectButton>
+        </span>
+      </div>
+    </div>
+  </form>
+  <p-divider align="left"> <b>Thông tin nâng cao</b> </p-divider>
+  <div class="p-fluid grid">
+    <div *ngFor="let metaData of metaDatas; let i = index" class="p-field col-6 md-12">
+      <span class="p-float-label">
+        <input type="text" pInputText [(ngModel)]="moreDetail[i]" />
+        <label>{{metaData}}</label>
+      </span>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Save" styleClass="p-button-success" (onClick)="save()">
+    </p-button>
+  </ng-template>
+</p-dialog>

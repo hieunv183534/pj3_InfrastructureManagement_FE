@@ -1,0 +1,48 @@
+<p-treeTable #tt [value]="treeData">
+  <ng-template pTemplate="caption">
+    <div style="text-align: right" style="width: 100%; display: flex; justify-content: space-between;">
+      <button pButton label="Thêm mới" icon="pi pi-plus" class="p-button p-button-success mr-2 p-mr-2"
+        (click)="addRootCategory()"></button>
+      <span class="flex align-items-center">
+        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Tìm kiếm" style="width:auto">
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Level</th>
+      <th>
+        <div class="flex justify-content-between align-items-center">
+          Thao tác
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+    <tr [ttRow]="rowNode">
+      <td>
+        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+        {{rowData.name}}
+      </td>
+      <td>{{rowData.code}}</td>
+      <td>{{rowData.level}}</td>
+      <td>
+        <button pButton pRipple icon="pi pi-plus" pTooltip="Thêm danh mục" (click)="addOnClickCategory(rowData)"
+          tooltipPosition="top" class="p-button-rounded p-button-success mr-2 p-button-sm"></button>
+        <button pButton pRipple icon="pi pi-pencil" pTooltip="Sửa danh mục" tooltipPosition="top"
+          (click)="updateCategoryOnClick(rowData)" class="p-button-rounded p-button-info mr-2 p-button-sm"></button>
+        <button pButton pRipple icon="pi pi-trash" pTooltip="Xóa danh mục" (click)="deleteCategoryOnClick(rowData)"
+          tooltipPosition="top" class="p-button-rounded p-button-danger p-button-sm"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-treeTable>
+
+<ng-container *ngIf="visibleAdd">
+  <app-add-category [data]="thisCategory" [display]="visibleAdd" (close)="closeForm()" (submit)="submitForm($event)"
+    [formMode]="formMode">
+  </app-add-category>
+</ng-container>

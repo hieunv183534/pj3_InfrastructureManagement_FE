@@ -1,0 +1,52 @@
+<form [formGroup]="formAdd">
+  <p-dialog [header]="formMode == 'add'? 'Thêm danh mục': 'Sửa danh mục'" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" (onHide)="hide()">
+    <p-divider align="left"> <b>Thông tin cơ bản</b> </p-divider>
+    <div class="p-fluid grid">
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" pInputText autofocus formControlName="name"/>
+          <label>Username <span style="color: red;">*</span>
+          </label>
+        </span>
+        <div *ngIf="f['name'].errors && f['name'].dirty">
+          <ng-container *ngIf="f['name'].errors['required']">
+            <p-tag styleClass="p-mr-2" severity="warning"
+              value="Tên danh mục không được để trống"></p-tag><br>
+          </ng-container>
+        </div>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" formControlName="code" pInputText/>
+          <label>Code</label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" formControlName="parentId" pInputText/>
+          <label>ParentId</label>
+        </span>
+      </div>
+      <div class="p-field col-6 md-12">
+        <span class="p-float-label">
+          <input type="text" formControlName="level" pInputText/>
+          <label>Level</label>
+        </span>
+      </div>
+    </div>
+    <p-divider align="left"> <b>Thông tin nâng cao</b> </p-divider>
+    <div class="p-fluid grid">
+      <div class="p-field col-12 md-12">
+        <span class="p-float-label">
+          <p-chips separator="," formControlName="metaDatas" [allowDuplicate]="false"></p-chips>
+          <label>MetaData</label>
+        </span>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button  label="Save" (onClick)="save()" styleClass="p-button-success">
+      </p-button>
+    </ng-template>
+</p-dialog>
+</form>
