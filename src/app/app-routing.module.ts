@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin/admin.component';
 import { CategoryComponent } from './components/admin/category/category.component';
 import { HomeComponent } from './components/admin/home/home.component';
+import { ItemRelationshipComponent } from './components/admin/item-relationship/item-relationship.component';
 import { ItemComponent } from './components/admin/item/item.component';
 import { ReportComponent } from './components/admin/report/report.component';
 import { LoginComponent } from './components/login/login.component';
@@ -29,6 +30,9 @@ const routes: Routes = [
       },
       {
         path: 'item', component: ItemComponent
+      },
+      {
+        path: 'relationship/:itemId', component: ItemRelationshipComponent
       },
       {
         path: 'report', component: ReportComponent

@@ -73,3 +73,13 @@ button.p-element.p-ripple.p-speeddial-button.p-button-rounded.p-speeddial-rotate
 div.p-dialog-content{
   overflow: visible !important;
 }
+
+
+.hieunv-item-detail p,h4{
+  margin: 2px !important;
+}
+
+
+.p-accordion-tab.p-accordion-tab-active .p-toggleable-content.ng-trigger.ng-trigger-tabContent{
+  overflow: visible !important;
+}

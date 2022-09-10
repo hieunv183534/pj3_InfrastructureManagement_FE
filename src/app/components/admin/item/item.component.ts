@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-item',
@@ -35,7 +36,9 @@ export class ItemComponent implements OnInit {
     private itemService: ItemService,
     private messageService: MessageService,
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.formSearch = this.fb.group({
       filter: [],
@@ -186,6 +189,10 @@ export class ItemComponent implements OnInit {
         });
       }
     });
+  }
+
+  relationshipOnClick(item: any){
+    this.router.navigate(['../relationship/'+ item.id], { relativeTo: this.route });
   }
 
 }

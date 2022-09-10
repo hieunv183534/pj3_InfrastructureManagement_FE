@@ -16,7 +16,8 @@
           </span>
         </div>
         <div class="p-field col-12 md-12">
-          <p-selectButton [options]="itemStatusList" optionLabel="name" optionValue="value" formControlName="status"></p-selectButton>
+          <p-selectButton [options]="itemStatusList" optionLabel="name" optionValue="value" formControlName="status">
+          </p-selectButton>
         </div>
       </div>
     </form>
@@ -84,10 +85,14 @@
         <td>{{item.qualityScore}}</td>
         <td>{{item.status}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" pTooltip="Sửa danh mục" tooltipPosition="top"
+          <button pButton pRipple icon="pi pi-pencil" pTooltip="Sửa đối tượng" tooltipPosition="top"
             class="p-button-rounded p-button-info mr-2 p-button-sm" (click)="updateItemOnClick(item)"></button>
-          <button pButton pRipple icon="pi pi-trash" pTooltip="Xóa danh mục" tooltipPosition="top"
-            class="p-button-rounded p-button-danger p-button-sm" (click)="deleteItem(item)"></button>
+          <button pButton pRipple icon="pi pi-trash" pTooltip="Xóa đối tượng" tooltipPosition="top"
+            class="p-button-rounded p-button-danger mr-2 p-button-sm" (click)="deleteItem(item)"></button>
+          <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng" tooltipPosition="top"
+            class="p-button-rounded p-button-help mr-2 p-button-sm" (click)="relationshipOnClick(item)"></button>
+          <button pButton pRipple icon="pi pi-history" pTooltip="Quản lí lịch sử đối tượng" tooltipPosition="top"
+            class="p-button-rounded p-button-secondary p-button-sm"></button>
         </td>
       </tr>
     </ng-template>
@@ -114,3 +119,4 @@
     (submit)="formOnSubmit($event)">
   </app-add-item>
 </ng-container>
+

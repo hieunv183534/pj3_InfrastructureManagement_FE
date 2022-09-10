@@ -22,4 +22,35 @@ export class ItemService extends BaseService {
       }
     });
   }
+
+  getChildPositions(itemId: string, index: number, count: number, filter: string, categoryCode: string){
+    let _filter = filter ? `&filter=${filter}` : '';
+    let _categoryCode = categoryCode ? `&categoryCode=${categoryCode}` : '';
+    return this.BaseAPIConfig.get(`${this.apiController}/getChildPositions/${itemId}?index=${index}&count=${count}${_filter}${_categoryCode}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      }
+    });
+  }
+
+  getChildAPartOfs(itemId: string, index: number, count: number, filter: string, categoryCode: string){
+    let _filter = filter ? `&filter=${filter}` : '';
+    let _categoryCode = categoryCode ? `&categoryCode=${categoryCode}` : '';
+    return this.BaseAPIConfig.get(`${this.apiController}/getChildAPartOfs/${itemId}?index=${index}&count=${count}${_filter}${_categoryCode}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      }
+    });
+  }
+
+  getItemDetail(itemId: string){
+    return this.BaseAPIConfig.get(`${this.apiController}/getItemDetail/${itemId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      }
+    });
+  }
 }

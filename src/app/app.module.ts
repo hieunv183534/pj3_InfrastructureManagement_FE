@@ -1,3 +1,4 @@
+import { ItemRelationshipComponent } from './components/admin/item-relationship/item-relationship.component';
 import { AddItemComponent } from './components/admin/item/add-item/add-item.component';
 import { ItemComponent } from './components/admin/item/item.component';
 import { AddCategoryComponent } from './components/admin/category/add-category/add-category.component';
@@ -38,6 +39,8 @@ import { TableModule } from 'primeng/table';
 import {SliderModule} from 'primeng/slider';
 import { TreeSelectModule } from 'primeng/treeselect';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { AccordionModule } from 'primeng/accordion';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import {SelectButtonModule} from 'primeng/selectbutton';
     CategoryComponent,
     AddCategoryComponent,
     ItemComponent,
-    AddItemComponent
+    AddItemComponent,
+    ItemRelationshipComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,9 @@ import {SelectButtonModule} from 'primeng/selectbutton';
     TableModule,
     SliderModule,
     TreeSelectModule,
-    SelectButtonModule
+    SelectButtonModule,
+    AccordionModule,
+    TabViewModule
   ],
   providers: [
     AuthService,
