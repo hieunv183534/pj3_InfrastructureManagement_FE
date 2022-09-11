@@ -2,7 +2,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Util } from './../../../shared/util/util';
 import { ItemService } from './../../../services/item.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-item-relationship',
@@ -24,6 +25,7 @@ export class ItemRelationshipComponent implements OnInit {
   endItem1 = 0;
   categoryCode1: any = "";
   listItem1: any[] = [];
+  isVisibleForm1: boolean = false;
 
   formSearch2: FormGroup;
   page2: number = 1;
@@ -33,12 +35,20 @@ export class ItemRelationshipComponent implements OnInit {
   endItem2 = 0;
   categoryCode2: any = "";
   listItem2: any[] = [];
+  isVisibleForm2: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private itemService: ItemService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+
     this.treeCategory = JSON.parse(localStorage.getItem('treeCategory') || '[]');
     this.formSearch1 = this.fb.group({
       filter: [],
@@ -52,13 +62,21 @@ export class ItemRelationshipComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.itemService.getItemDetail(params["itemId"]).then((res: any) => {
-        this.itemDetail = res.data.data;
-      });
       this.itemId = params["itemId"];
+      this.getItemDetail();
     });
     this.getListItem1();
     this.getListItem2();
+    this.getRoot();
+    setTimeout(() => {
+      this.getItemNoParent();
+    }, 5000)
+  }
+
+  getItemDetail(){
+    this.itemService.getItemDetail(this.itemId).then((res: any) => {
+      this.itemDetail = res.data.data;
+    });
   }
 
   getDateTime(d: any) {
@@ -81,6 +99,24 @@ export class ItemRelationshipComponent implements OnInit {
     }
   }
 
+  relationshipOnClick(item: any) {
+    this.router.navigate(['../../relationship/' + item.id], { relativeTo: this.route });
+  }
+
+  getRoot() {
+    this.itemService.getRoot(this.itemId).then((res: any) => {
+      localStorage.setItem('rootItem', JSON.stringify(res.data.data));
+    })
+  }
+
+  getItemNoParent() {
+    let rootItem = JSON.parse(localStorage.getItem("rootItem") || '{}');
+    this.itemService.getItemNoParent(0, 100, "", "", rootItem.id).then((res: any) => {
+      console.log(res.data);
+
+    });
+  }
+
 
   // ---------------------------------------------------
 
@@ -92,8 +128,13 @@ export class ItemRelationshipComponent implements OnInit {
       this.pageSize1,
       this.formSearch1.value.filter,
       this.categoryCode1).then((res: any) => {
-        this.totalRecords1 = res.data.data.total;
-        this.listItem1 = res.data.data.data;
+        if (res.data.code === 2004) {
+          this.totalRecords1 = 0;
+          this.listItem1 = [];
+        } else {
+          this.totalRecords1 = res.data.data.total;
+          this.listItem1 = res.data.data.data;
+        }
       });
   }
 
@@ -105,8 +146,13 @@ export class ItemRelationshipComponent implements OnInit {
       this.pageSize2,
       this.formSearch2.value.filter,
       this.categoryCode2).then((res: any) => {
-        this.totalRecords2 = res.data.data.total;
-        this.listItem2 = res.data.data.data;
+        if (res.data.code === 2004) {
+          this.totalRecords2 = 0;
+          this.listItem2 = [];
+        } else {
+          this.totalRecords2 = res.data.data.total;
+          this.listItem2 = res.data.data.data;
+        }
       });
   }
 
@@ -136,5 +182,78 @@ export class ItemRelationshipComponent implements OnInit {
     this.page2 = value.page + 1;
     this.pageSize2 = value.rows;
     this.getListItem2();
+  }
+
+  deleteRelationship2(item: any) {
+    this.confirmationService.confirm({
+      key: 'hieunvConfirm',
+      header: "Xác nhận",
+      message: `Bạn có thực sự muốn xóa Đối tượng ${item.name} khỏi vùng chứa của đối tượng ${this.itemDetail.baseInfo.item.name}?`,
+      acceptLabel: "Xóa",
+      rejectLabel: "Hủy",
+      accept: () => {
+        this.itemService.deleteRelationship(item.relationId).then((res: any) => {
+          this.getListItem2();
+          this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Xóa thành công!" });
+        }).catch((err: any) => {
+          this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Xóa thất bại!" });
+        });
+      }
+    });
+  }
+
+  deleteRelationship1(item: any) {
+    this.confirmationService.confirm({
+      key: 'hieunvConfirm',
+      header: "Xác nhận",
+      message: `Bạn có thực sự muốn xóa Đối tượng ${item.name} khỏi thành phần của đối tượng ${this.itemDetail.baseInfo.item.name}?`,
+      acceptLabel: "Xóa",
+      rejectLabel: "Hủy",
+      accept: () => {
+        this.itemService.deleteRelationship(item.relationId).then((res: any) => {
+          this.getListItem1();
+          this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Xóa thành công!" });
+        }).catch((err: any) => {
+          this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Xóa thất bại!" });
+        });
+      }
+    });
+  }
+
+  addItemOnClick1() {
+    this.isVisibleForm1 = true;
+  }
+
+  addItemOnClick2() {
+    this.isVisibleForm2 = true;
+  }
+
+  closeForm1() {
+    this.isVisibleForm1 = false;
+  }
+
+  closeForm2() {
+    this.isVisibleForm2 = false;
+  }
+
+  submitForm1(data: any) {
+    console.log(data);
+    this.itemService.addRelationship({
+      itemId: data.id,
+      parentId: this.itemId,
+      isFixed: data.isFixed,
+      relationshipType: 1
+    }).then((res: any) => {
+      this.getListItem1();
+      this.getItemDetail();
+      this.isVisibleForm1 = false;
+      this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Thêm đối tượng thành phần thành công!" });
+    }).catch((err: any) => {
+      this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Thêm đối tượng thành phần thất bại!" });
+    });
+  }
+
+  submitForm2(data: any) {
+
   }
 }
