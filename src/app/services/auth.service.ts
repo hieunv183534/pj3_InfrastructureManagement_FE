@@ -11,7 +11,7 @@ export class AuthService extends BaseService {
     this.apiController = 'api/Account';
   }
 
-  login(body:any) {
+  login(body: any) {
     return this.BaseAPIConfig.post(`${this.apiController}/login`, body);
   }
 
@@ -21,6 +21,15 @@ export class AuthService extends BaseService {
 
   logout() {
     return this.BaseAPIConfig.post(`${this.apiController}/logout`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      }
+    });
+  }
+
+  getOverView() {
+    return this.BaseAPIConfig.get(`${this.apiController}/getOverView`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: sessionStorage.getItem("token"),

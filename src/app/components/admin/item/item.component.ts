@@ -29,7 +29,7 @@ export class ItemComponent implements OnInit {
   categoryCode: string = '';
 
   formSearch: FormGroup;
-  itemStatusList: any[] = [{ name: "All", value: null }, { name: "Using", value: 0 }, { name: "Broken", value: 1 }, { name: "UnderMaintenance", value: 2 }, { name: "Storage", value: 3 }, { name: "Liquidation", value: 4 }];
+  itemStatusList: any[] = [{ name: "All", value: null }, { name: "Using", value: 1 }, { name: "Broken", value: 2 }, { name: "UnderMaintenance", value: 3 }, { name: "Storage", value: 4 }, { name: "Liquidation", value: 5 }];
 
   constructor(
     private categoryService: CategoryService,
@@ -195,4 +195,19 @@ export class ItemComponent implements OnInit {
     this.router.navigate(['../relationship/'+ item.id], { relativeTo: this.route });
   }
 
+  getStatus(s: number) {
+    switch (s) {
+      case 1:
+        return "Using";
+      case 2:
+        return "Broken";
+      case 3:
+        return "UnderMaintenance";
+      case 4:
+        return "Storage";
+      case 5:
+        return "Liquidation";
+      default: return "";
+    }
+  }
 }

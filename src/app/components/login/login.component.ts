@@ -26,23 +26,25 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.getOverView().then((res: any) => {
+      localStorage.setItem('overview', JSON.stringify(res.data.data));
+    })
   }
 
   get f() { return this.formLogin.controls; }
 
   login() {
 
-    (<any>Object).values(this.formLogin.controls).forEach((control : any) : any => {
+    (<any>Object).values(this.formLogin.controls).forEach((control: any): any => {
       control.markAsDirty();
     });
 
     if (this.formLogin.valid) {
       this.authService.login(this.formLogin.value).then((res: any): any => {
-        console.log(res.data);
         if (res.data.code == 1000) {
           this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Đăng nhập thành công!" });
-          sessionStorage.setItem('token',res.data.data.token);
-          sessionStorage.setItem('info',JSON.stringify(res.data.data.infomation));
+          sessionStorage.setItem('token', res.data.data.token);
+          sessionStorage.setItem('info', JSON.stringify(res.data.data.infomation));
           this.router.navigate(['../admin'], { relativeTo: this.route });
         }
       }, (err: any): any => {

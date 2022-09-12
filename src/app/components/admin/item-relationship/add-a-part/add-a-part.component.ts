@@ -106,15 +106,15 @@ export class AddAPartComponent implements OnInit {
 
   getStatus(s: number) {
     switch (s) {
-      case 0:
-        return "Using";
       case 1:
-        return "Broken";
+        return "Using";
       case 2:
-        return "UnderMaintenance";
+        return "Broken";
       case 3:
-        return "Storage";
+        return "UnderMaintenance";
       case 4:
+        return "Storage";
+      case 5:
         return "Liquidation";
       default: return "";
     }

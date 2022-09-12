@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/admin/home/home.component';
 import { AddPositionComponent } from './components/admin/item-relationship/add-position/add-position.component';
 import { AddAPartComponent } from './components/admin/item-relationship/add-a-part/add-a-part.component';
 import { ItemRelationshipComponent } from './components/admin/item-relationship/item-relationship.component';
@@ -44,6 +45,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import { AccordionModule } from 'primeng/accordion';
 import { TabViewModule } from 'primeng/tabview';
 import {CheckboxModule} from 'primeng/checkbox';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     LoginComponent,
     RegisterComponent,
     AdminComponent,
+    HomeComponent,
     CategoryComponent,
     AddCategoryComponent,
     ItemComponent,
@@ -86,7 +89,8 @@ import {CheckboxModule} from 'primeng/checkbox';
     SelectButtonModule,
     AccordionModule,
     TabViewModule,
-    CheckboxModule
+    CheckboxModule,
+    PanelModule
   ],
   providers: [
     AuthService,

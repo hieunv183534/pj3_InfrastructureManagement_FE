@@ -1,42 +1,40 @@
 <div class="card">
-  <p-fieldset legend="Thông tin cơ bản đối tượng" [toggleable]="true">
-    <form>
-      <div *ngIf="itemDetail" class="p-fluid grid hieunv-item-detail">
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Mã đối tượng: </h4>
-          <p>{{itemDetail.baseInfo.item.code}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Tên đối tượng: </h4>
-          <p>{{itemDetail.baseInfo.item.name}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Danh mục: </h4>
-          <p>{{itemDetail.baseInfo.category.name}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Chỉ số chất lượng: </h4>
-          <p>{{itemDetail.baseInfo.item.qualityScore}} / 100</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Trạng thái : </h4>
-          <p>{{ getStatus(itemDetail.baseInfo.item.status)}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Số đối tượng thành phần : </h4>
-          <p>{{itemDetail.numOfAPart}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Số đối tượng chứa : </h4>
-          <p>{{itemDetail.numOfPosition}}</p>
-        </div>
-        <div class="p-field col-3 md-12">
-          <h4 class="mr5">Ngày cập nhật gần nhất: </h4>
-          <p>{{getDateTime(itemDetail.baseInfo.item.modifiedAt)}}</p>
-        </div>
+  <p-panel header="Thông tin cơ bản đối tượng" [toggleable]="true">
+    <div *ngIf="itemDetail" class="p-fluid grid hieunv-item-detail">
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Mã đối tượng: </h4>
+        <p>{{itemDetail.baseInfo.item.code}}</p>
       </div>
-    </form>
-  </p-fieldset>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Tên đối tượng: </h4>
+        <p>{{itemDetail.baseInfo.item.name}}</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Danh mục: </h4>
+        <p>{{itemDetail.baseInfo.category.name}}</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Chỉ số chất lượng: </h4>
+        <p>{{itemDetail.baseInfo.item.qualityScore}} / 100</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Trạng thái : </h4>
+        <p>{{ getStatus(itemDetail.baseInfo.item.status)}}</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Số đối tượng thành phần : </h4>
+        <p>{{itemDetail.numOfAPart}}</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Số đối tượng chứa : </h4>
+        <p>{{itemDetail.numOfPosition}}</p>
+      </div>
+      <div class="p-field col-3 md-12">
+        <h4 class="mr5">Ngày cập nhật gần nhất: </h4>
+        <p>{{getDateTime(itemDetail.baseInfo.item.modifiedAt)}}</p>
+      </div>
+    </div>
+  </p-panel>
   <br>
   <p-accordion [multiple]="true">
     <p-accordionTab header="Danh sách đối tượng con">
@@ -265,15 +263,52 @@
       </p-tabView>
     </p-accordionTab>
     <p-accordionTab header="Đối tượng cha">
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-        aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
+      <p-panel *ngIf="parentItem != null" [header]="'Loại quan hệ: '+ parentItem.relationship">
+        <ng-template pTemplate="icons">
+          <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng"
+                    tooltipPosition="top" class="p-button-rounded p-button-help mr-2 p-button-sm"
+                    (click)="relationshipOnClick(parentItem)"></button>
+        </ng-template>
+        <div class="p-fluid grid hieunv-item-detail">
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Mã đối tượng: </h4>
+            <p>{{parentItem.code}}</p>
+          </div>
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Tên đối tượng: </h4>
+            <p>{{parentItem.name}}</p>
+          </div>
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Danh mục: </h4>
+            <p>{{parentItem.category.name}}</p>
+          </div>
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Chỉ số chất lượng: </h4>
+            <p>{{parentItem.qualityScore}} / 100</p>
+          </div>
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Trạng thái : </h4>
+            <p>{{ getStatus(parentItem.status)}}</p>
+          </div>
+          <div class="p-field col-4 md-12">
+            <h4 class="mr5">Ngày cập nhật gần nhất: </h4>
+            <p>{{getDateTime(itemDetail.baseInfo.item.modifiedAt)}}</p>
+          </div>
+        </div>
+      </p-panel>
+      <div class="p-fluid grid" *ngIf="parentItem == null">
+        <div class="p-field col-12 md-12 flex justify-content-center">
+          <h4 class="">Đối tượng không thuộc về đối tượng cha nào cả</h4>
+        </div>
+      </div>
     </p-accordionTab>
   </p-accordion>
 </div>
 
 <ng-container *ngIf="isVisibleForm1">
   <app-add-a-part [display]="isVisibleForm1" (close)="closeForm1()" (submit)="submitForm1($event)"></app-add-a-part>
+</ng-container>
+
+<ng-container *ngIf="isVisibleForm2">
+  <app-add-position [display]="isVisibleForm2" (close)="closeForm2()" (submit)="submitForm2($event)"></app-add-position>
 </ng-container>

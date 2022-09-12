@@ -92,4 +92,13 @@ export class ItemService extends BaseService {
       }
     });
   }
+
+  getParentItem(itemId: string){
+    return this.BaseAPIConfig.get(`${this.apiController}/getParentItem/${itemId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: sessionStorage.getItem("token"),
+      }
+    });
+  }
 }

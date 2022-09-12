@@ -16,6 +16,7 @@ export class ItemRelationshipComponent implements OnInit {
   treeCategory: any;
   pageSizeOptions: any[] = [10, 20, 50, 100, 200];
   itemId: string = "";
+  parentItem: any = null;
 
   formSearch1: FormGroup;
   page1: number = 1;
@@ -64,19 +65,28 @@ export class ItemRelationshipComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemId = params["itemId"];
       this.getItemDetail();
+      this.getParentItem();
+      this.getRoot();
     });
     this.getListItem1();
     this.getListItem2();
-    this.getRoot();
-    setTimeout(() => {
-      this.getItemNoParent();
-    }, 5000)
   }
 
-  getItemDetail(){
+  getItemDetail() {
     this.itemService.getItemDetail(this.itemId).then((res: any) => {
       this.itemDetail = res.data.data;
     });
+  }
+
+  getParentItem() {
+    this.itemService.getParentItem(this.itemId).then((res: any) => {
+      if (res.data.data){
+        this.parentItem = res.data.data.item;
+        this.parentItem.relationship = res.data.data.relation.relationshipType == 1 ? "Thành phần" : "Vùng chứa";
+      }
+      else
+        this.parentItem = null;
+    })
   }
 
   getDateTime(d: any) {
@@ -85,15 +95,15 @@ export class ItemRelationshipComponent implements OnInit {
 
   getStatus(s: number) {
     switch (s) {
-      case 0:
-        return "Using";
       case 1:
-        return "Broken";
+        return "Using";
       case 2:
-        return "UnderMaintenance";
+        return "Broken";
       case 3:
-        return "Storage";
+        return "UnderMaintenance";
       case 4:
+        return "Storage";
+      case 5:
         return "Liquidation";
       default: return "";
     }
@@ -108,15 +118,6 @@ export class ItemRelationshipComponent implements OnInit {
       localStorage.setItem('rootItem', JSON.stringify(res.data.data));
     })
   }
-
-  getItemNoParent() {
-    let rootItem = JSON.parse(localStorage.getItem("rootItem") || '{}');
-    this.itemService.getItemNoParent(0, 100, "", "", rootItem.id).then((res: any) => {
-      console.log(res.data);
-
-    });
-  }
-
 
   // ---------------------------------------------------
 
@@ -194,6 +195,7 @@ export class ItemRelationshipComponent implements OnInit {
       accept: () => {
         this.itemService.deleteRelationship(item.relationId).then((res: any) => {
           this.getListItem2();
+          this.getItemDetail();
           this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Xóa thành công!" });
         }).catch((err: any) => {
           this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Xóa thất bại!" });
@@ -212,6 +214,7 @@ export class ItemRelationshipComponent implements OnInit {
       accept: () => {
         this.itemService.deleteRelationship(item.relationId).then((res: any) => {
           this.getListItem1();
+          this.getItemDetail();
           this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Xóa thành công!" });
         }).catch((err: any) => {
           this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Xóa thất bại!" });
@@ -237,7 +240,6 @@ export class ItemRelationshipComponent implements OnInit {
   }
 
   submitForm1(data: any) {
-    console.log(data);
     this.itemService.addRelationship({
       itemId: data.id,
       parentId: this.itemId,
@@ -254,6 +256,18 @@ export class ItemRelationshipComponent implements OnInit {
   }
 
   submitForm2(data: any) {
-
+    this.itemService.addRelationship({
+      itemId: data.id,
+      parentId: this.itemId,
+      isFixed: false,
+      relationshipType: 0
+    }).then((res: any) => {
+      this.getListItem2();
+      this.getItemDetail();
+      this.isVisibleForm2 = false;
+      this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Thêm đối tượng chứa thành công!" });
+    }).catch((err: any) => {
+      this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Thêm đối tượng chứa thất bại!" });
+    });
   }
 }

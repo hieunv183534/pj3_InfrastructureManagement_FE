@@ -16,7 +16,7 @@ export class AddItemComponent implements OnInit {
   @Output() submit: EventEmitter<any> = new EventEmitter();
   thisCategory: any = null;
   treeCategory: any;
-  itemStatusList: any[] = [{ name: "Using", value: 0 }, { name: "Broken", value: 1 }, { name: "UnderMaintenance", value: 2 }, { name: "Storage", value: 3 }, { name: "Liquidation", value: 4 }];
+  itemStatusList: any[] = [{ name: "Using", value: 1 }, { name: "Broken", value: 2 }, { name: "UnderMaintenance", value: 3 }, { name: "Storage", value: 4 }, { name: "Liquidation", value: 5 }];
 
   metaDatas: string[] = [];
   moreDetail: string[] = [];

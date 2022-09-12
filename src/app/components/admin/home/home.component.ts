@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  overview: any;
+
+  constructor() {
+    this.overview = JSON.parse( localStorage.getItem('overview') || "[]" );
+    console.log(this.overview);
+  }
 
   ngOnInit() {
   }
