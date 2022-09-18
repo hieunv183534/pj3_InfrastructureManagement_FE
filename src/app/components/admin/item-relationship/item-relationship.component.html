@@ -51,7 +51,7 @@
                 </div>
                 <div class="p-field col-6 md-12">
                   <span class="p-float-label">
-                    <p-treeSelect [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
+                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
                       (onNodeSelect)="selectCategory1($event)"></p-treeSelect>
                     <label for="filter">Danh mục</label>
                   </span>
@@ -165,7 +165,7 @@
                 </div>
                 <div class="p-field col-6 md-12">
                   <span class="p-float-label">
-                    <p-treeSelect [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
+                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
                       (onNodeSelect)="selectCategory2($event)"></p-treeSelect>
                     <label for="filter">Danh mục</label>
                   </span>

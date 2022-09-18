@@ -21,22 +21,29 @@ export class AdminComponent implements OnInit {
       {
         label: "Trang chủ",
         icon: "pi pi-home",
-        routerLink : "home"
+        routerLink: "home"
       },
       {
         label: "Quản lí danh mục",
         icon: "pi pi-sitemap",
-        routerLink : "category"
+        routerLink: "category"
       },
       {
         label: "Quản lí đối tượng",
         icon: "pi pi-building",
-        routerLink : "item"
+        routerLink: "item",
+        items: [
+          {
+            label: "Đối tượng đã xóa",
+            icon: "pi pi-trash",
+            routerLink: "item-deleted",
+          }
+        ]
       },
       {
         label: "Báo cáo",
         icon: "pi pi-file",
-        routerLink : "report"
+        routerLink: "report"
       }
     ];
 

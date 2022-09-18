@@ -7,16 +7,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  templateUrl: './item.component.html'
 })
 export class ItemComponent implements OnInit {
 
   visibleAdd: boolean = false;
+  visibleLog: boolean = false;
   formMode: string = 'add';
   thisItem: any;
   listTree: any[] = [];
   listItem: any[] = [];
+  itemIdToLog: any;
 
   page: number = 1;
   pageSize: number = 10;
@@ -209,5 +210,10 @@ export class ItemComponent implements OnInit {
         return "Liquidation";
       default: return "";
     }
+  }
+
+  openItemLog(item: any){
+    this.itemIdToLog = item.id;
+    this.visibleLog = true;
   }
 }

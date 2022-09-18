@@ -1,3 +1,5 @@
+import { ItemDeletedComponent } from './components/admin/item-deleted/item-deleted.component';
+import { ItemLogComponent } from './components/admin/item/item-log/item-log.component';
 import { HomeComponent } from './components/admin/home/home.component';
 import { AddPositionComponent } from './components/admin/item-relationship/add-position/add-position.component';
 import { AddAPartComponent } from './components/admin/item-relationship/add-a-part/add-a-part.component';
@@ -46,6 +48,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { TabViewModule } from 'primeng/tabview';
 import {CheckboxModule} from 'primeng/checkbox';
 import { PanelModule } from 'primeng/panel';
+import {ChartModule} from 'primeng/chart';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,9 @@ import { PanelModule } from 'primeng/panel';
     AddItemComponent,
     ItemRelationshipComponent,
     AddAPartComponent,
-    AddPositionComponent
+    AddPositionComponent,
+    ItemLogComponent,
+    ItemDeletedComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +96,9 @@ import { PanelModule } from 'primeng/panel';
     AccordionModule,
     TabViewModule,
     CheckboxModule,
-    PanelModule
+    PanelModule,
+    ChartModule,
+    OverlayPanelModule
   ],
   providers: [
     AuthService,
