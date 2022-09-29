@@ -1,3 +1,11 @@
+import { UpdateReportComponent } from './components/admin/report/update-report/update-report.component';
+import { MissingComponent } from './components/admin/report/missing/missing.component';
+import { BrokenComponent } from './components/admin/report/broken/broken.component';
+import { AddMissingReportComponent } from './components/reporter/missing-report/add-missing-report/add-missing-report.component';
+import { AddBrokenReportComponent } from './components/reporter/broken-report/add-broken-report/add-broken-report.component';
+import { MissingReportComponent } from './components/reporter/missing-report/missing-report.component';
+import { BrokenReportComponent } from './components/reporter/broken-report/broken-report.component';
+import { ReporterComponent } from './components/reporter/reporter.component';
 import { ItemDeletedComponent } from './components/admin/item-deleted/item-deleted.component';
 import { ItemLogComponent } from './components/admin/item/item-log/item-log.component';
 import { HomeComponent } from './components/admin/home/home.component';
@@ -50,6 +58,11 @@ import {CheckboxModule} from 'primeng/checkbox';
 import { PanelModule } from 'primeng/panel';
 import {ChartModule} from 'primeng/chart';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {FileUploadModule} from 'primeng/fileupload';
+import {HttpClientModule} from '@angular/common/http';
+import {GalleriaModule} from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -66,7 +79,16 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     AddAPartComponent,
     AddPositionComponent,
     ItemLogComponent,
-    ItemDeletedComponent
+    ItemDeletedComponent,
+    ReporterComponent,
+    BrokenReportComponent,
+    MissingReportComponent,
+    AddBrokenReportComponent,
+    AddMissingReportComponent,
+    BrokenComponent,
+    MissingComponent,
+    UpdateReportComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -98,7 +120,12 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     CheckboxModule,
     PanelModule,
     ChartModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    DropdownModule,
+    InputTextareaModule,
+    FileUploadModule,
+    HttpClientModule,
+    GalleriaModule
   ],
   providers: [
     AuthService,

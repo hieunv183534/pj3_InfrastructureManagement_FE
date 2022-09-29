@@ -1,4 +1,42 @@
-<div class="card">
+<p-dialog header="Báo cần bổ sung thiết bị" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="hide()">
+  <div class="p-fluid grid">
+    <div class="p-field col-12 md-12">
+      <span class="p-float-label">
+        <textarea pInputTextarea [(ngModel)]="reportNote"></textarea>
+        <label for="filter">Nội dung báo cáo</label>
+      </span>
+    </div>
+    <div class="p-field col-6 md-12">
+      <span class="p-float-label">
+        <input type="text" pInputText [(ngModel)]="choosedItem.name" disabled>
+        <label>Tên đối tượng <span style="color: red;">*</span>
+        </label>
+      </span>
+    </div>
+    <div class="p-field col-6 md-12">
+      <span class="p-float-label">
+        <input type="text" pInputText [(ngModel)]="choosedItem.code" disabled/>
+        <label>Mã đối tượng <span style="color: red;">*</span>
+        </label>
+      </span>
+    </div>
+    <div class="p-field col-6 md-12">
+      <span class="p-float-label">
+        <p-treeSelect (onNodeSelect)="selectCategory1($event)" appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"></p-treeSelect>
+        <label for="filter">Cần đối tượng loại</label>
+      </span>
+    </div>
+    <div class="p-field col-6 md-12">
+      <span class="p-float-label">
+        <p-inputNumber inputId="integeronly" [(ngModel)]="quantity" [showButtons]="true" [min]="0" (onInput)="renderContent()">
+        </p-inputNumber>
+        <label>Số lượng cần <span style="color: red;">*</span>
+        </label>
+      </span>
+    </div>
+  </div>
+  <p-divider align="left"> <b>Danh sách đối tượng</b> </p-divider>
   <p-fieldset legend="Tìm kiếm" [toggleable]="true" [collapsed]="true">
     <form [formGroup]="formSearch" (ngSubmit)="onSearchSubmit()">
       <div class="p-fluid grid">
@@ -10,14 +48,10 @@
         </div>
         <div class="p-field col-6 md-12">
           <span class="p-float-label">
-            <p-treeSelect [options]="listTree" selectionMode="single" placeholder="Chọn danh mục"
+            <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
               (onNodeSelect)="selectCategory($event)"></p-treeSelect>
             <label for="filter">Danh mục</label>
           </span>
-        </div>
-        <div class="p-field col-12 md-12">
-          <p-selectButton [options]="itemStatusList" optionLabel="name" optionValue="value" formControlName="status">
-          </p-selectButton>
         </div>
       </div>
     </form>
@@ -26,8 +60,6 @@
         (click)="onSearchSubmit()"></button>
     </p-toolbar>
   </p-fieldset>
-  <br>
-
   <p-table #dt [value]="listItem" [rowHover]="true" dataKey="id"
     styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
     [globalFilterFields]="['code','name']">
@@ -77,10 +109,8 @@
         <td> <p-tag styleClass="mr-2" [severity]="item.qualityScore >= 85 ? 'success' : item.qualityScore>= 60 ? 'warning' : 'danger'" [value]="item.qualityScore" [rounded]="true"></p-tag></td>
         <td> <p-tag styleClass="mr-2" [severity]="item.status == 1? 'success' : item.status == 2 ? 'warning' : item.status == 5? 'danger': 'info'" [value]="getStatus(item.status)" [rounded]="true"></p-tag></td>
         <td>
-          <button pButton pRipple icon="pi pi-undo" pTooltip="Restore lại đối tượng" tooltipPosition="top"
-            class="p-button-rounded p-button-info mr-2 p-button-sm" (click)="restoreItem(item)"></button>
-            <button pButton pRipple icon="pi pi-history" pTooltip="Quản lí lịch sử đối tượng" tooltipPosition="top"
-            class="p-button-rounded p-button-secondary p-button-sm" (click)="openItemLog(item)"></button>
+          <button pButton pRipple icon="pi pi-shield" pTooltip="Chọn đối tượng này" tooltipPosition="top"
+            class="p-button-rounded p-button-help mr-2 p-button-sm" (click)="reportThisItem(item)"></button>
         </td>
       </tr>
     </ng-template>
@@ -99,10 +129,9 @@
       </div>
     </ng-template>
   </p-table>
-  <p-toast [style]="{marginTop: '80px'}"></p-toast>
-</div>
+  <ng-template pTemplate="footer">
+    <p-button label="Save" styleClass="p-button-success" (onClick)="save()">
+    </p-button>
+  </ng-template>
+</p-dialog>
 
-<ng-container *ngIf="visibleLog">
-  <app-item-log [itemId]="itemIdToLog" [display]="visibleLog" (close)="visibleLog = false">
-  </app-item-log>
-</ng-container>

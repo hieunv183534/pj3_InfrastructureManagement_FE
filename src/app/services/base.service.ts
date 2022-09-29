@@ -13,7 +13,7 @@ export class BaseService {
   constructor() {
     this.apiController = '';
     this.BaseAPIConfig = axios.create({
-      baseURL: "https://localhost:7033/"
+      baseURL: "https://infrastructure-management.herokuapp.com/"
     });
   }
 

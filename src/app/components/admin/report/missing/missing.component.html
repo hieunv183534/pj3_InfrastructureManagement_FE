@@ -1,0 +1,106 @@
+<div class="card">
+  <p-table #dt [value]="listReport" [rowHover]="true" dataKey="id"
+    styleClass="p-datatable-customers p-datatable-gridlines p-datatable-striped p-datatable-sm"
+    [globalFilterFields]="['code','name']">
+    <ng-template pTemplate="caption">
+      <div class="flex flex-column md:flex-row md:justify-content-between table-header">
+        <span class="flex">
+          <p-dropdown [options]="statusOptions" [(ngModel)]="reportStatus" optionLabel="name" optionValue="value" (onChange)="getListItem(true)"></p-dropdown>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr class="ng-star-inserted">
+        <th style="width: 5rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="code">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Mã đối tượng
+            <p-sortIcon field="code"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="name">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Tên đối tượng
+            <p-sortIcon field="name"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="categoryId">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Cần đối tượng loại
+            <p-sortIcon field="categoryId"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="quantity">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Cần số lượng
+            <p-sortIcon field="quantity"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="status">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Trạng thái
+            <p-sortIcon field="status"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="reporter.username">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Người báo cáo
+            <p-sortIcon field="reporter.username"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="createdAt">
+          <div class="flex justify-content-between align-items-center ml-auto">
+            Ngày báo cáo
+            <p-sortIcon field="createdAt"></p-sortIcon>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            Thao tác
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="report"></p-tableCheckbox>
+        </td>
+        <td>{{report.positionItem.code}}</td>
+        <td>{{report.positionItem.name}}</td>
+        <td>{{report.category.name}}</td>
+        <td>{{report.quantity}}</td>
+        <td><p-tag [value]="statuses[report.status]"></p-tag></td>
+        <td>{{report.reporter.username}}</td>
+        <td> {{formatDateTime(report.createdAt)}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" pTooltip="Cập nhật" tooltipPosition="top"
+            class="p-button-rounded p-button-info mr-2 p-button-sm" (click)="updateReport(report)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">Không tồn tại dữ liệu.</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <p-paginator [pageLinkSize]="pageSize" [rows]="pageSize" [totalRecords]="totalRecords"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} record" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="pageSizeOptions" (onPageChange)="onPageChange($event)">
+      </p-paginator>
+      <div class="flex align-items-center justify-content-center">
+        In total there are {{ totalRecords }} dataObjects.
+      </div>
+    </ng-template>
+  </p-table>
+  <p-toast [style]="{marginTop: '80px'}"></p-toast>
+</div>
+
+<ng-container *ngIf="visibleAdd">
+  <app-update-report [data]="data" [display]="visibleAdd" (close)="visibleAdd = false" (submit)="submitForm($event)">
+  </app-update-report>
+</ng-container>
+

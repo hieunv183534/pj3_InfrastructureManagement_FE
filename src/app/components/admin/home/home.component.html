@@ -1,5 +1,14 @@
 
 <div class="card flex flex-column justify-content-center align-items-center">
+  <p-fieldset legend="Xuất báo cáo" [toggleable]="false">
+    <p-toolbar styleClass="flex align-items-center justify-content-center">
+      <button pButton pRipple label="Báo cáo tổng quan" class="p-button p-mr-2 mr-4" (click)="exportOverView()"></button>
+      <button pButton pRipple label="Báo cáo các danh mục" class="p-button p-mr-2 mr-4" (click)="exportCategory()"></button>
+      <button pButton pRipple label="Báo cáo các đối tượng" class="p-button p-mr-2 mr-4" (click)="exportItem()"></button>
+      <button pButton pRipple label="Báo cáo các vấn đề giải quyết" class="p-button p-mr-2" (click)="exportProblem()"></button>
+    </p-toolbar>
+  </p-fieldset>
+
   <h3>Tổng quan</h3>
   <p-chart type="pie" [data]="data0" [style]="{'width': '40%'}" (onDataSelect)="onDataSelect($event)"></p-chart>
 

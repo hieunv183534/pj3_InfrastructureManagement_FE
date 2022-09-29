@@ -45,7 +45,12 @@ export class LoginComponent implements OnInit {
           this.messageService.add({ key: "toastUserView", severity: 'success', summary: "SUCCESS", detail: "Đăng nhập thành công!" });
           sessionStorage.setItem('token', res.data.data.token);
           sessionStorage.setItem('info', JSON.stringify(res.data.data.infomation));
-          this.router.navigate(['../admin'], { relativeTo: this.route });
+
+          if (res.data.data.infomation.role == 'admin') {
+            this.router.navigate(['../admin'], { relativeTo: this.route });
+          } else {
+            this.router.navigate(['../reporter'], { relativeTo: this.route });
+          }
         }
       }, (err: any): any => {
         this.messageService.add({ key: "toastUserView", severity: 'error', summary: "FAILED", detail: "Đăng nhập thất bại!" });

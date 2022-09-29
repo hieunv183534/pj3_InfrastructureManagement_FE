@@ -51,8 +51,8 @@
                 </div>
                 <div class="p-field col-6 md-12">
                   <span class="p-float-label">
-                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
-                      (onNodeSelect)="selectCategory1($event)"></p-treeSelect>
+                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single"
+                      placeholder="Chọn danh mục" (onNodeSelect)="selectCategory1($event)"></p-treeSelect>
                     <label for="filter">Danh mục</label>
                   </span>
                 </div>
@@ -123,8 +123,16 @@
                 </td>
                 <td>{{item.code}}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.qualityScore}}</td>
-                <td>{{getStatus(item.status)}}</td>
+                <td>
+                  <p-tag styleClass="mr-2"
+                    [severity]="item.qualityScore >= 85 ? 'success' : item.qualityScore>= 60 ? 'warning' : 'danger'"
+                    [value]="item.qualityScore" [rounded]="true"></p-tag>
+                </td>
+                <td>
+                  <p-tag styleClass="mr-2"
+                    [severity]="item.status == 1? 'success' : item.status == 2 ? 'warning' : item.status == 5? 'danger': 'info'"
+                    [value]="getStatus(item.status)" [rounded]="true"></p-tag>
+                </td>
                 <td>{{item.isFixed}}</td>
                 <td>
                   <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng"
@@ -165,8 +173,8 @@
                 </div>
                 <div class="p-field col-6 md-12">
                   <span class="p-float-label">
-                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single" placeholder="Chọn danh mục"
-                      (onNodeSelect)="selectCategory2($event)"></p-treeSelect>
+                    <p-treeSelect appendTo="body" [options]="treeCategory" selectionMode="single"
+                      placeholder="Chọn danh mục" (onNodeSelect)="selectCategory2($event)"></p-treeSelect>
                     <label for="filter">Danh mục</label>
                   </span>
                 </div>
@@ -231,8 +239,16 @@
                 </td>
                 <td>{{item.code}}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.qualityScore}}</td>
-                <td>{{getStatus(item.status)}}</td>
+                <td>
+                  <p-tag styleClass="mr-2"
+                    [severity]="item.qualityScore >= 85 ? 'success' : item.qualityScore>= 60 ? 'warning' : 'danger'"
+                    [value]="item.qualityScore" [rounded]="true"></p-tag>
+                </td>
+                <td>
+                  <p-tag styleClass="mr-2"
+                    [severity]="item.status == 1? 'success' : item.status == 2 ? 'warning' : item.status == 5? 'danger': 'info'"
+                    [value]="getStatus(item.status)" [rounded]="true"></p-tag>
+                </td>
                 <td>
                   <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng"
                     tooltipPosition="top" class="p-button-rounded p-button-help mr-2 p-button-sm"
@@ -265,9 +281,8 @@
     <p-accordionTab header="Đối tượng cha">
       <p-panel *ngIf="parentItem != null" [header]="'Loại quan hệ: '+ parentItem.relationship">
         <ng-template pTemplate="icons">
-          <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng"
-                    tooltipPosition="top" class="p-button-rounded p-button-help mr-2 p-button-sm"
-                    (click)="relationshipOnClick(parentItem)"></button>
+          <button pButton pRipple icon="pi pi-sitemap" pTooltip="Quản lí liên kết đối tượng" tooltipPosition="top"
+            class="p-button-rounded p-button-help mr-2 p-button-sm" (click)="relationshipOnClick(parentItem)"></button>
         </ng-template>
         <div class="p-fluid grid hieunv-item-detail">
           <div class="p-field col-4 md-12">

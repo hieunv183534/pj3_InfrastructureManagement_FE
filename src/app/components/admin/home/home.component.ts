@@ -1,6 +1,7 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExportExcelService } from 'src/app/services/export-excel.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
+    private exportExcelService: ExportExcelService,
     private router: Router) {
     this.overview = JSON.parse(localStorage.getItem("overview") || '[1,5,5,1,1,1,1,1,1,1,1,1,1]');
 
@@ -35,12 +37,12 @@ export class HomeComponent implements OnInit {
   }
 
   onDataSelect(data: any) {
-    if(data.element.index == 0){
+    if (data.element.index == 0) {
       this.router.navigate(['../category'], { relativeTo: this.route });
-    }else if(data.element.index==1){
+    } else if (data.element.index == 1) {
       this.router.navigate(['../item'], { relativeTo: this.route });
-    }else{
-      this.router.navigate(['../report'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../report-broken'], { relativeTo: this.route });
     }
   }
 
@@ -105,5 +107,57 @@ export class HomeComponent implements OnInit {
         }
       ]
     };
+  }
+
+  exportOverView() {
+    this.exportExcelService.getOverView().then((res: any) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      const filename = `file.xlsx`;
+      a.setAttribute("download", filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
+  exportCategory() {
+    this.exportExcelService.getCategory().then((res: any) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      const filename = `file.xlsx`;
+      a.setAttribute("download", filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
+  exportItem() {
+    this.exportExcelService.getItem().then((res: any) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      const filename = `file.xlsx`;
+      a.setAttribute("download", filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+  }
+
+  exportProblem() {
+    this.exportExcelService.getProblem().then((res: any) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      const filename = `file.xlsx`;
+      a.setAttribute("download", filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
   }
 }

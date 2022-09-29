@@ -41,9 +41,20 @@ export class AdminComponent implements OnInit {
         ]
       },
       {
-        label: "Báo cáo",
+        label: "Vấn đề",
         icon: "pi pi-file",
-        routerLink: "report"
+        items:[
+          {
+            label: "Báo hỏng",
+            icon: "pi pi-ticket",
+            routerLink: "report-broken",
+          },
+          {
+            label: "Báo thiếu",
+            icon: "pi pi-desktop",
+            routerLink: "report-missing",
+          }
+        ]
       }
     ];
 
