@@ -1,13 +1,15 @@
 import { BaseService } from './base.service';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
 
-  constructor() {
-    super();
+  constructor(private _router: Router, private _messageService: MessageService) {
+    super(_router,_messageService);
     this.apiController = 'api/Account';
   }
 
@@ -20,21 +22,11 @@ export class AuthService extends BaseService {
   }
 
   logout() {
-    return this.BaseAPIConfig.post(`${this.apiController}/logout`, {}, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: sessionStorage.getItem("token"),
-      }
-    });
+    return this.BaseAPIConfig.post(`${this.apiController}/logout`);
   }
 
   getOverView() {
-    return this.BaseAPIConfig.get(`${this.apiController}/getOverView`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: sessionStorage.getItem("token"),
-      }
-    });
+    return this.BaseAPIConfig.get(`${this.apiController}/getOverView`);
   }
 
 }

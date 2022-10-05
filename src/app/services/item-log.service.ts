@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -6,17 +8,12 @@ import { BaseService } from './base.service';
 })
 export class ItemLogService extends BaseService {
 
-  constructor() {
-    super();
+  constructor(private _router: Router, private _messageService: MessageService) {
+    super(_router,_messageService);
     this.apiController = 'api/ItemLog';
   }
 
   getLogOfItem(itemId: string) {
-    return this.BaseAPIConfig.get(`${this.apiController}/${itemId}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: sessionStorage.getItem("token"),
-      }
-    });
+    return this.BaseAPIConfig.get(`${this.apiController}/${itemId}`);
   }
 }
